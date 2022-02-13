@@ -1,0 +1,629 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+
+// Variable Declaration
+// _______________________
+
+$family: Rubik;
+$size: 16px;
+$moderateBlue: hsl(238, 40%, 52%);
+$softRed: hsl(358, 79%, 66%);
+$lightGrayishBlue: hsl(239, 57%, 85%);
+$paleRed: hsl(357, 100%, 86%);
+$darkBlue: hsl(212, 24%, 26%);
+$grayishBlue: hsl(211, 10%, 45%);
+$lightGray: hsl(223, 19%, 93%);
+$lighterGray: hsl(228, 33%, 97%);
+$white: hsl(0, 0%, 100%);
+$avaterSize: 40px;
+
+// General Reset
+
+html {
+  font-size: $size;
+  color: $grayishBlue;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+input,
+button,
+textarea {
+  font-family: $family, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input,
+button,
+select {
+  outline: none;
+}
+
+a {
+  text-decoration: initial;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a,
+i,
+svg,
+img {
+  display: inline-block;
+}
+
+li {
+  list-style: none;
+}
+
+p {
+  line-height: 1.5;
+}
+
+// Mixin
+// _________
+
+@mixin button {
+  padding: 13px 18px;
+  border-radius: 8px;
+  background-color: $moderateBlue;
+  color: $white;
+  border: transparent;
+  font-weight: 700;
+  font-size: $size;
+  -o-transition: background-color 0.3s ease;
+  -moz-transition: background-color 0.3s ease;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+
+@mixin card {
+  border-radius: 8px;
+  background-color: $white;
+  padding: 1rem;
+}
+
+@mixin textField($height) {
+  width: 100%;
+  height: $height;
+  border: 0.1rem solid $grayishBlue;
+  padding: 10px;
+  font-size: $size;
+  border-radius: 8px;
+  -o-transition: outline-color 0.3s ease;
+  -moz-transition: outline-color 0.3s ease;
+  -webkit-transition: outline-color 0.3s ease;
+  transition: outline-color 0.3s ease;
+}
+
+@mixin min-w($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin max-w($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+// Layouts
+// ________
+
+body,
+.col-section-1 div,
+.comment__info__wrapper,
+.user__info__container,
+.col-section-3,
+.btn__reply,
+.model,
+.btn__wrapper {
+  display: flex;
+}
+
+.comment,
+.section__comment > div {
+  display: grid;
+  grid-gap: 1.2rem;
+}
+
+body {
+  position: relative;
+}
+
+body,
+.model {
+  justify-content: center;
+}
+
+.col-section-1 div,
+.comment__info__wrapper,
+.user__info__container,
+.model {
+  align-items: center;
+}
+
+.btn__delete,
+.btn__edit,
+.vote__count span,
+.u__name span,
+.current_user span,
+.btn__reply span,
+.comment__body span {
+  font-weight: 700;
+}
+
+.col-section-1 div {
+  justify-content: space-evenly;
+}
+
+body {
+  background-color: $lighterGray;
+  overflow-x: hidden;
+}
+
+.page {
+  overflow: hidden;
+}
+
+.page,
+.content__body {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.page {
+  max-width: 1300px;
+  min-width: 320px;
+}
+
+.content__body {
+  width: 90%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.comment__container {
+  li {
+    margin-bottom: 1.4rem;
+  }
+}
+
+li {
+  .comment__nested {
+    margin-top: 1.4rem;
+  }
+}
+
+textarea {
+  @include textField(80px);
+
+  &:focus-visible {
+    outline: 0.1rem solid $moderateBlue;
+  }
+}
+
+.comment,
+.section__comment {
+  @include card;
+}
+
+.comment,
+.section__comment > div {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.col-section-1 {
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
+
+.col-section-2 {
+  grid-column: 1/3;
+  grid-row: 1/2;
+}
+
+.col-section-3 {
+  grid-column: 2/3;
+  grid-row: 3/4;
+}
+
+.col-section-2-span-2 {
+  grid-column: 1/3;
+  grid-row: 2/3;
+}
+
+.col-section-1 {
+  div {
+    background-color: $lightGray;
+    border-radius: 8px;
+    padding: 7px;
+  }
+}
+
+.vote__count {
+  span {
+    color: $moderateBlue;
+  }
+}
+
+.btn__downvote {
+  margin-top: -8px;
+}
+
+.btn__upvote,
+.btn__downvote {
+  path {
+    -o-transition: fill 0.3s ease;
+    -moz-transition: fill 0.3s ease;
+    -webkit-transition: fill 0.3s ease;
+    transition: fill 0.3s ease;
+  }
+  &:hover {
+    path {
+      fill: $moderateBlue;
+    }
+  }
+}
+
+.comment__header .u__avater {
+  img {
+    width: $avaterSize;
+  }
+}
+
+.section__avater {
+  img {
+    width: $avaterSize;
+  }
+}
+
+.user__info__container,
+.u__avater {
+  margin-right: 1rem;
+}
+
+.u__name {
+  span {
+    color: darken($grayishBlue, 25);
+  }
+}
+
+.current_user {
+  margin-left: 1rem;
+}
+
+.current_user {
+  span {
+    padding: 0.2rem 0.5rem;
+    background-color: $moderateBlue;
+    color: $white;
+    border-radius: 2px;
+  }
+}
+
+.col-section-3 {
+  justify-content: flex-end;
+  padding: 7px 0;
+}
+
+.btn__delete,
+.btn__reply,
+.btn__edit {
+  path {
+    -o-transition: fill 0.3s ease;
+    -moz-transition: fill 0.3s ease;
+    -webkit-transition: fill 0.3s ease;
+    transition: fill 0.3s ease;
+  }
+}
+
+.btn__delete,
+.btn__reply,
+.btn__edit {
+  span {
+    -o-transition: color 0.3s ease;
+    -moz-transition: color 0.3s ease;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+  }
+}
+
+.btn__reply {
+  i {
+    margin-right: 6px;
+  }
+
+  span {
+    color: $moderateBlue;
+  }
+
+  &:hover {
+    span {
+      color: $lightGrayishBlue;
+    }
+    path {
+      fill: $lightGrayishBlue !important;
+    }
+  }
+}
+
+.section__comment {
+  margin-top: 0.8rem;
+}
+
+.section__commentbox {
+  grid-column: 1/3;
+  grid-row: 1/2;
+}
+
+.section__avater {
+  grid-column: 1/2;
+}
+
+.section__btn {
+  grid-column: 2/3;
+}
+
+.section__avater,
+.section__btn {
+  grid-row: 2/3;
+}
+
+.section__btn {
+  justify-content: end;
+  text-align: right;
+}
+
+.btn {
+  @include button;
+
+  &:hover {
+    background-color: $lightGrayishBlue;
+  }
+}
+
+.comment__nested {
+  $outerPad: 1rem;
+  $innerPad: 1rem;
+  ul {
+    border-left: 0.15rem solid $lightGray;
+    padding-left: $innerPad;
+  }
+}
+
+.update {
+  text-align: right;
+}
+
+.btn__delete {
+  span {
+    color: $softRed;
+  }
+}
+
+.btn__delete:hover {
+  path {
+    fill: $paleRed;
+  }
+  span {
+    color: $paleRed;
+  }
+}
+
+.btn__edit:hover {
+  path {
+    fill: $lightGrayishBlue;
+  }
+
+  span {
+    color: $lightGrayishBlue;
+  }
+}
+
+.btn__edit {
+  span {
+    color: $moderateBlue;
+  }
+}
+
+.btn__delete,
+.btn__edit {
+  svg {
+    margin-left: 6px;
+  }
+}
+
+.btn__delete {
+  margin-right: 0.5rem;
+}
+
+.comment__body {
+  span {
+    color: $moderateBlue;
+  }
+}
+
+.model {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  $transparency: 0.7;
+  background-color: rgba($darkBlue, $transparency);
+}
+
+.model__card {
+  @include card();
+  background-color: $white;
+  padding: 2rem;
+  width: 50vmax;
+  max-width: 24rem;
+}
+
+.card__header,
+.card__body {
+  margin-bottom: 1rem;
+}
+
+.btn__wrapper {
+  justify-content: space-between;
+}
+
+.card__btn_delete {
+  background-color: $softRed;
+  &:hover {
+    background-color: $paleRed;
+  }
+}
+
+.card__btn_cancel {
+  background-color: $grayishBlue;
+  $transparency: 0.5;
+  &:hover {
+    background-color: rgba($grayishBlue, $transparency);
+  }
+}
+
+// .model__container {
+
+// }
+// Responsive
+// _____________
+
+@include min-w(320px) {
+  .card__btn_delete,
+  .card__btn_cancel {
+    padding: 1rem 0.5rem;
+    font-size: ($size/1px - 2) * 1px;
+  }
+}
+
+@include min-w(434px) {
+  .comment__nested {
+    // Sass do not support variable scoping
+    // Therefore, declare a new variable
+    //and use in the scope
+    $outerPad: 1rem;
+    margin-left: $outerPad;
+  }
+
+  .card__btn_delete,
+  .card__btn_cancel {
+    padding: 1rem 0.5rem;
+    font-size: ($size/1px - 2) * 1px;
+  }
+}
+
+@include min-w(635px) {
+  .comment__nested {
+    // Sass do not support variable scoping
+    // Therefore, declare a new variable
+    //and use in the scope
+    $outerPad: 2rem;
+    $innerPad: 1.6rem;
+    margin-left: $outerPad;
+
+    ul {
+      padding-left: $innerPad;
+    }
+  }
+
+  .card__btn_delete,
+  .card__btn_cancel {
+    padding: 0.8rem 0.9rem;
+    font-size: ($size/1px - 1) * 1px;
+  }
+}
+
+@include min-w(701px) {
+  .card__btn_delete,
+  .card__btn_cancel {
+    padding: 0.8rem 1.5rem;
+    font-size: $size;
+  }
+}
+
+@include min-w(727px) {
+  .comment {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .col-section-1 {
+    grid-column: 1/2;
+    grid-row: 1/3;
+  }
+
+  .col-section-2 {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+
+  .col-section-3 {
+    grid-column: 3/4;
+    grid-row: 1/2;
+  }
+
+  .col-section-2-span-2 {
+    grid-column: 2/4;
+    grid-row: 2/3;
+  }
+
+  .col-section-1 div {
+    flex-direction: column;
+  }
+
+  .vote__count {
+    margin: 0.7rem 0;
+  }
+
+  .section__comment > div {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .section__commentbox {
+    grid-column: 2/3;
+  }
+
+  .section__avater {
+    grid-column: 1/2;
+  }
+
+  .section__btn {
+    grid-column: 3/4;
+  }
+
+  .section__avater,
+  .section__btn,
+  .section__commentbox {
+    grid-row: 1/2;
+  }
+
+  textarea {
+    height: 100px;
+  }
+}
+
+@include min-w(1017px) {
+  .content__body {
+    max-width: 1017px;
+  }
+}
+
+// Javascript classes
+// __________
+
+.hidden {
+  display: none;
+}

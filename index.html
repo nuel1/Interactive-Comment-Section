@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Interactive Comment Section</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="content__body">
+        <section>
+          <ul class="comment__container"></ul>
+
+          <div class="model hidden">
+            <div class="model__container">
+              <div class="model__card">
+                <div class="card__header">
+                  <h1>Delete comment</h1>
+                </div>
+                <div class="card__body">
+                  <p>
+                    Are you sure you want to delete this comment? This will
+                    remove the comment and can't be undone.
+                  </p>
+                </div>
+                <div class="card__footer">
+                  <div class="btn__wrapper">
+                    <a class="btn card__btn_cancel">NO, CANCEL</a>
+                    <a class="btn card__btn_delete">YES, DELETE</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer>
+          <ul>
+            <li>
+              <div class="section__comment">
+                <div>
+                  <div class="section__avater">
+                    <img src="images/avatars/image-juliusomo.webp" alt="" />
+                  </div>
+                  <div class="section__commentbox">
+                    <textarea placeholder="Add comment"></textarea>
+                  </div>
+                  <div class="section__btn">
+                    <button class="btn">SEND</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </footer>
+      </div>
+    </div>
+
+    <script src="js/script.js" type="module"></script>
+  </body>
+</html>
