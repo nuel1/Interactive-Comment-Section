@@ -228,10 +228,6 @@ function editTime() {
   return mergeDate;
 }
 
-function showTime() {
-  new Time(this);
-}
-
 function refreshTimer() {
   if (time.length) {
     time.forEach(([func, id]) => {
@@ -264,106 +260,115 @@ export function edit() {
   refreshTimer.call(this);
 }
 
-export function Time(s) {
-  this.seconds = 0;
-  this.minute = 0;
-  this.hour = 0;
-  this.day = 0;
-  this.week = 0;
-  this.month = 0;
-  this.year = 0;
+export class Time {
+  constructor(user, time = null) {
+    this.seconds = time ? time.seconds : null || 0;
+    this.minute = time ? time.minute : null || 0;
+    this.hour = time ? time.hour : null || 0;
+    this.day = time ? time.day : null || 0;
+    this.week = time ? time.week : null || 0;
+    this.month = time ? time.month : null || 0;
+    this.year = time ? time.year : null || 0;
 
-  function updateTime() {
-    if (this.seconds > 59) {
-      this.seconds = 0;
-      this.minute = this.minute + 1;
+    function updateTime() {
+      if (this.seconds > 59) {
+        this.seconds = 0;
+        this.minute = this.minute + 1;
+      }
+      if (this.minute > 59) {
+        this.minute = 0;
+        this.hour = this.hour + 1;
+      }
+      if (this.hour > 23) {
+        this.hour = 0;
+        this.day = this.day + 1;
+      }
+      if (this.day > 6) {
+        this.day = 0;
+        this.week = this.week + 1;
+      }
+      (() => {
+        const months =
+          "Jan_Feb_March_April_May_June_July_Aug_Sep_Oct_Nov_Dec".split("_");
+        const currMonth = months[new Date().getMonth()];
+
+        const resetWeek = () => {
+          this.week = 0;
+          this.month = this.month + 1;
+        };
+
+        if (currMonth === months[1]) {
+          if (this.week > 2) resetWeek();
+        } else {
+          if (this.week > 3) resetWeek();
+        }
+      })();
+
+      if (this.month > 11) {
+        this.month = 0;
+        this.year = this.year + 1;
+      }
+
+      (() => {
+        if (
+          !this.minute &&
+          !this.hour &&
+          !this.day &&
+          !this.week &&
+          !this.month &&
+          !this.year
+        ) {
+          user.createdAt = "Just now";
+        }
+        if (
+          this.minute &&
+          !this.hour &&
+          !this.day &&
+          !this.week &&
+          !this.month &&
+          !this.year
+        ) {
+          user.createdAt =
+            this.minute > 1 ? `${this.minute} minutes ago` : `a minute ago`;
+        }
+        if (this.hour && !this.day && !this.week && !this.month && !this.year) {
+          user.createdAt =
+            this.hour > 1 ? `${this.hour} hours ago` : `an hour ago`;
+        }
+        if (this.day && !this.week && !this.month && !this.year) {
+          user.createdAt = this.day > 1 ? `${this.day} days ago` : `a day ago`;
+        }
+        if (this.week && !this.month && !this.year) {
+          user.createdAt =
+            this.week > 1 ? `${this.week} weeks ago` : `a week ago`;
+        }
+        if (this.month && !this.year) {
+          user.createdAt =
+            this.month > 1 ? `${this.month} months ago` : `a month ago`;
+        }
+        if (this.year) {
+          user.createdAt =
+            this.year > 1 ? `${this.year} years ago` : `a year ago`;
+        }
+      })();
+
+      this.seconds = this.seconds + 1;
     }
-    if (this.minute > 59) {
-      this.minute = 0;
-      this.hour = this.hour + 1;
+
+    const timeId = setInterval(updateTime.bind(this), 1000);
+
+    if (!user.timeID) {
+      Object.defineProperty(user, "timeID", {
+        enumerable: false,
+        writable: true,
+        value: timeId,
+      });
+    } else {
+      user.timeID = timeId;
     }
-    if (this.hour > 23) {
-      this.hour = 0;
-      this.day = this.day + 1;
-    }
-    if (this.day > 6) {
-      this.day = 0;
-      this.week = this.week + 1;
-    }
-    (() => {
-      const months =
-        "Jan_Feb_March_April_May_June_July_Aug_Sep_Oct_Nov_Dec".split("_");
-      const currMonth = months[new Date().getMonth()];
-
-      const resetWeek = () => {
-        this.week = 0;
-        this.month = this.month + 1;
-      };
-
-      if (currMonth === months[1]) {
-        if (this.week > 2) resetWeek();
-      } else {
-        if (this.week > 3) resetWeek();
-      }
-    })();
-
-    if (this.month > 11) {
-      this.month = 0;
-      this.year = this.year + 1;
-    }
-
-    (() => {
-      if (
-        !this.minute &&
-        !this.hour &&
-        !this.day &&
-        !this.week &&
-        !this.month &&
-        !this.year
-      ) {
-        s.createdAt = "Just now";
-      }
-      if (
-        this.minute &&
-        !this.hour &&
-        !this.day &&
-        !this.week &&
-        !this.month &&
-        !this.year
-      ) {
-        s.createdAt =
-          this.minute > 1 ? `${this.minute} minutes ago` : `a minute ago`;
-      }
-      if (this.hour && !this.day && !this.week && !this.month && !this.year) {
-        s.createdAt = this.hour > 1 ? `${this.hour} hours ago` : `an hour ago`;
-      }
-      if (this.day && !this.week && !this.month && !this.year) {
-        s.createdAt = this.day > 1 ? `${this.day} days ago` : `a day ago`;
-      }
-      if (this.week && !this.month && !this.year) {
-        s.createdAt = this.week > 1 ? `${this.week} weeks ago` : `a week ago`;
-      }
-      if (this.month && !this.year) {
-        s.createdAt =
-          this.month > 1 ? `${this.month} months ago` : `a month ago`;
-      }
-      if (this.year) {
-        s.createdAt = this.year > 1 ? `${this.year} years ago` : `a year ago`;
-      }
-    })();
-
-    this.seconds = this.seconds + 1;
   }
+}
 
-  const timeId = setInterval(updateTime.bind(this), 1000);
-
-  if (!s.timeID) {
-    Object.defineProperty(s, "timeID", {
-      enumerable: false,
-      writable: true,
-      value: timeId,
-    });
-  } else {
-    s.timeID = timeId;
-  }
+function showTime() {
+  new Time(this);
 }

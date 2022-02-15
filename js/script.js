@@ -98,3 +98,44 @@ export class CurrentUser extends User {
     });
   }
 }
+
+/**
+ * Retrieves the last state of a comment time before the window or tab closed
+ * from the browser local storage
+ */
+function retrieveTime() {
+  return new Promise((resolve, reject) => {
+    const getter = async () => {
+      const data = JSON.parse(localStorage.getItem("storage"));
+      if (data) {
+        return data.time;
+      }
+      throw new Error("Item doesn't exist in your browser Local Storage");
+    };
+
+    getter()
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+/**
+ * Gets the time array that contains the time of each user comment saved in browser
+ * Local Storage from retrieveTime function and uses the object contained
+ * in the array as a reference to each user and appropriately set the
+ * currentTime property of a specific user object to the time
+ * defined for that user.
+ * @param {object} comment of each user
+ */
+function setUserTime(user) {
+  retrieveTime().then((data) => {
+    data.forEach((obj) => {
+      if (obj.id == user.id) {
+      }
+    });
+  });
+}
