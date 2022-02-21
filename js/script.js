@@ -158,10 +158,3 @@ export class TimeInfo {
     });
   }
 }
-
-export function saveTimeToStorage() {
-  data.time.forEach((obj) => {
-    if (obj.id == this.id) {
-    }
-  });
-}
