@@ -135,7 +135,33 @@ function setUserTime(user) {
   retrieveTime().then((data) => {
     data.forEach((obj) => {
       if (obj.id == user.id) {
+        new Time(user, obj);
+        deleteTimeRunner(user.id);
+        const t = time;
+        t.push([updateTime.bind(this), this.id]);
       }
     });
+  });
+}
+
+export class TimeInfo {
+  constructor() {
+    this.id = null;
+    const properties = "seconds_minute_hour_day_month_year".split("_");
+    const value = {
+      value: null,
+      enumerable: false,
+      writable: true,
+    };
+    properties.forEach((key) => {
+      Object.defineProperty(this, key, value);
+    });
+  }
+}
+
+export function saveTimeToStorage() {
+  data.time.forEach((obj) => {
+    if (obj.id == this.id) {
+    }
   });
 }
